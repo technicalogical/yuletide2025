@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS gift_items (
     target_price DECIMAL(10,2),
     current_best_price DECIMAL(10,2),
     notes TEXT,
+    product_url TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (recipient_id) REFERENCES recipients (id) ON DELETE CASCADE

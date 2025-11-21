@@ -36,19 +36,20 @@ export class GiftItemModel {
 
   static create(item: Omit<GiftItem, 'id' | 'created_at' | 'updated_at'>): GiftItem {
     const stmt = db.prepare(`
-      INSERT INTO gift_items (recipient_id, name, description, priority, status, target_price, current_best_price, notes)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO gift_items (recipient_id, name, description, priority, status, target_price, current_best_price, notes, product_url)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     const result = stmt.run(
       item.recipient_id,
       item.name,
       item.description || null,
-      item.priority,
-      item.status,
+      item.priority || 1,
+      item.status || 'needed',
       item.target_price || null,
       item.current_best_price || null,
-      item.notes || null
+      item.notes || null,
+      item.product_url || null
     );
 
     return this.getById(result.lastInsertRowid as number)!;
@@ -61,7 +62,7 @@ export class GiftItemModel {
     const stmt = db.prepare(`
       UPDATE gift_items
       SET recipient_id = ?, name = ?, description = ?, priority = ?, status = ?,
-          target_price = ?, current_best_price = ?, notes = ?, updated_at = CURRENT_TIMESTAMP
+          target_price = ?, current_best_price = ?, notes = ?, product_url = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
     `);
 
@@ -74,6 +75,7 @@ export class GiftItemModel {
       item.target_price ?? current.target_price,
       item.current_best_price ?? current.current_best_price,
       item.notes ?? current.notes,
+      item.product_url ?? current.product_url,
       id
     );
 

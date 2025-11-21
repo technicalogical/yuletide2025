@@ -19,6 +19,7 @@ export interface GiftItem {
   target_price?: number;
   current_best_price?: number;
   notes?: string;
+  product_url?: string;
   created_at?: string;
   updated_at?: string;
   recipient?: Recipient;

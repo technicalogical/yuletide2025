@@ -30,7 +30,8 @@ export const giftItemSchema = Joi.object({
   status: Joi.string().valid('needed', 'researching', 'ready_to_buy', 'purchased').default('needed'),
   target_price: Joi.number().optional().min(0),
   current_best_price: Joi.number().optional().min(0),
-  notes: Joi.string().optional().max(500)
+  notes: Joi.string().optional().max(500),
+  product_url: Joi.string().uri().optional()
 });
 
 export const purchaseSchema = Joi.object({
